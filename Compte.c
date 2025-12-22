@@ -4,3 +4,4 @@
 #include <time.h>
 #include <stdderf.h>
 #include <ctype.h>
+#include "fonction_comptage.h"
