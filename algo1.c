@@ -2,58 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <stdderf.h>
-#include <ctype.h>
-#include "fonction_comptage.h"
-
-int recherche(Liste *m, char *mot) {
-    for(; *m; m = &((*m)->suivant)) {
-        if(strcmp((*m)->mot, mot) == 0) {
-            (*m)->compteur++;
-            return 1; 
-        }
-    }
-    return 0;
-}
-
-int creation(Liste *m, char *mot, InfoMem *info) {  
-    MotNode *tmp = myMalloc(sizeof(MotNode), info);  
-    if (tmp == NULL) {
-        printf("Erreur d'allocation\n");
-        return 0;
-    }
-    tmp->mot = myMalloc(strlen(mot) + 1, info);  
-    if (tmp->mot == NULL) {
-        printf("Erreur d'allocation\n");
-        myFree(tmp, info, sizeof(MotNode));  
-        return 0; 
-    }
-    strcpy(tmp->mot, mot);
-    tmp->compteur = 1;
-    tmp->suivant = *m;
-    *m = tmp;
-    return 1; 
-}
-
-void MotFichier(FILE *Fichier, Liste *l, InfoMem *info) { 
-    char c;  
-    while ((c = fgetc(Fichier)) != EOF) {
-        char *mot = NULL; 
-        int len = 0;
-
-        while(c != ' ' && c != '\n' && c != EOF && (isalpha(c) || c == '-')) {
-            len++;
-            mot = myRealloc(mot, len + 1, info, len);  
-            if (mot == NULL) {
-                return;  
-            }
-            mot[len - 1] = c;#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
 #include <ctype.h>
 #include "algo1.h"
-#include "fonction_allocation.h"
 
 
 int recherche(Liste *m, char *mot) {
@@ -85,7 +35,7 @@ int creation(Liste *m, char *mot, InfoMem *info){
     return 1; 
 }
 
-void COnversion(char *str){
+void Conversion(char *str){
     for (int i = 0; str[i]; i++) {
         str[i] = tolower((unsigned char)str[i]);
     }
@@ -134,7 +84,7 @@ void MotFichier(FILE *Fichier, Liste *l, InfoMem *info){
         
         if (len > 0){
             mot[len] = '\0';
-            COnversion(mot); 
+            Conversion(mot); 
             if (!recherche(l, mot)){  
                 creation(l, mot, info); 
             }

@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <stdderf.h>
+#include <stddef.h>
 #include <ctype.h>
-#include "fonction.h"
+#include "fonction_allocation.h"
 
 
 void Init(InfoMem * infoMem){
