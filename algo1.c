@@ -4,7 +4,7 @@
 #include <time.h>
 #include <ctype.h>
 #include "algo1.h"
-
+#include "fonction_allocation.h"
 
 int recherche(Liste *m, char *mot) {
     for(; *m; m = &((*m)->suivant)) {
@@ -187,7 +187,7 @@ void ecrirePerformances(InfoMem *info, double temps, const char *fichier){
     FILE *f = fopen(fichier, "a"); 
     if (!f) return;
     
-    fprintf(f, "%zu,%zu,%zu,%f\n", 
+    fprintf(f, "%zu,%zu,%zu,%f,Algo1\n", 
             info->cumul_alloc, 
             info->cumul_desalloc, 
             info->max_alloc, 
@@ -214,10 +214,15 @@ void algo1(const char *fichierEntree, int n, InfoMem *info,
     if (afficher) {
         AfficherResultat(liste, n);
     }
+    printf("\n=== PERFORMANCES ALGO 1 ===\n");
+    printf("Cumul allocation : %zu octets\n", info->cumul_alloc);
+    printf("Cumul désallocation : %zu octets\n", info->cumul_desalloc);
+    printf("Allocation max : %zu octets\n", info->max_alloc);
     printf("Temps d'exécution : %.6f secondes\n", temps);
+    printf("===========================\n");
+    
     if (fichierSortie) {
         ecrireFichier(liste, n, fichierSortie);
     }
-    ecrirePerformances(info, temps, "performances.csv");
-    libererListe(&liste, info);
+    ecrirePerformances(info, temps, "performances_algo1.csv");
 }
