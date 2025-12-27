@@ -158,11 +158,11 @@ void ecrireFichierTab(TableauDynamique *tab, int n, const char *nomFichier) {
     fclose(f);
 }
 
-void ecrirePerformancesTab(InfoMem *info, double temps, const char *fichier) {
+void ecrirePerformancesTab(InfoMem *info, double temps, const char *fichier){
     FILE *f = fopen(fichier, "a"); 
     if (!f) return;
     
-    fprintf(f, "%zu,%zu,%zu,%f,Algo2_Tableau\n", 
+    fprintf(f, "%zu,%zu,%zu,%f,Algo2\n",  
             info->cumul_alloc, 
             info->cumul_desalloc, 
             info->max_alloc, 
@@ -198,13 +198,20 @@ void algo2(const char *fichierEntree, int n, InfoMem *info, const char *fichierS
         AfficherResultatTab(&tab, n);
     }
 
-    printf("Temps d'exécution (Algo 2) : %.6f secondes\n", temps);
+    printf("\n=== PERFORMANCES ALGO 2 ===\n");
+    printf("Cumul allocation : %zu octets\n", info->cumul_alloc);
+    printf("Cumul désallocation : %zu octets\n", info->cumul_desalloc);
+    printf("Allocation max : %zu octets\n", info->max_alloc);
+    printf("Temps d'exécution : %.6f secondes\n", temps);
+    printf("===========================\n");
 
     if (fichierSortie) {
         ecrireFichierTab(&tab, n, fichierSortie);
     }
 
-    ecrirePerformancesTab(info, temps, "performances.csv");
+    ecrirePerformancesTab(info, temps, "performances_algo2.csv");
+
     
     libererTableau(&tab, info);
 }
+
