@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include "fonction_allocation.h"
-
-typedef struct MotNode {
-    char *mot;
-    int compteur;
-    struct MotNode *suivant;
-} MotNode, *Liste;
+#include "fonction_commun.h"
 
 int recherche(Liste *m, char *mot);
 int creation(Liste *m, char *mot, InfoMem *info);
