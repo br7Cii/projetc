@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "fonction_allocation.h"
 #include "algo1.h"
-#include "algo2.h"  // À ajouter
-#include "algo3.h"  // À ajouter
+#include "algo2.h"  
+#include "algo3.h"  
 
 int main(int argc, char *argv[]) {
     if (argc < 5) {
