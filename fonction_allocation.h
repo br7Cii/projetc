@@ -1,10 +1,15 @@
+#ifndef FONCTION_ALLOCATION_H
+#define FONCTION_ALLOCATION_H
+
+#include <stddef.h>
+
 typedef struct {
-    size_t cumul_alloc;    // champ obligatoire : cumul de l’espace mémoire alloué
-    size_t cumul_desalloc; // champ obligatoire : cumul de l’espace mémoire
+    size_t cumul_alloc;    // champ obligatoire : cumul de l'espace mémoire alloué
+    size_t cumul_desalloc; // champ obligatoire : cumul de l'espace mémoire
                            // désalloué
     size_t max_alloc;      // pic d'allocation (diff max des deux cumuls)
 
-    // d’autres champs qui sembleraient utiles
+    // d'autres champs qui sembleraient utiles
     // ...
 } InfoMem;
 
@@ -24,3 +29,4 @@ void myFree(void *ptr, InfoMem *infoMem, size_t old_size);
 // Libère un bloc de mémoire précédemment alloué.
 // 'old_size' est la taille du bloc à libérer.
 
+#endif // FONCTION_ALLOCATION_H

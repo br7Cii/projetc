@@ -83,12 +83,14 @@ int creationTab(TableauDynamique *tab, char *mot, InfoMem *info) {
     return 1;
 }
 
-void MotFichierTab(FILE *Fichier, TableauDynamique *tab, InfoMem *info) {
+int MotFichierTab(FILE *Fichier, TableauDynamique *tab, InfoMem *info) {
     char c;
+    int nb_total = 0;
+    
     while ((c = fgetc(Fichier)) != EOF) {
         while (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
             c = fgetc(Fichier);
-            if (c == EOF) return;
+            if (c == EOF) return nb_total;
         }
 
         char *mot = NULL;
@@ -97,7 +99,7 @@ void MotFichierTab(FILE *Fichier, TableauDynamique *tab, InfoMem *info) {
         while (c != EOF && (isalpha((unsigned char)c) || c == '-' || (unsigned char)c >= 128)) {
             len++;
             mot = myRealloc(mot, len + 1, info, len);
-            if (!mot) return; 
+            if (!mot) return nb_total; 
             
             mot[len - 1] = c;
             c = fgetc(Fichier);
@@ -106,14 +108,14 @@ void MotFichierTab(FILE *Fichier, TableauDynamique *tab, InfoMem *info) {
         if (c == '\'' && len > 0) {
              len++;
              mot = myRealloc(mot, len + 1, info, len);
-             if (!mot) return;
+             if (!mot) return nb_total;
              mot[len - 1] = '\'';
              
              c = fgetc(Fichier);
              while (c != EOF && (isalpha((unsigned char)c) || c == '-' || (unsigned char)c >= 128)) {
                 len++;
                 mot = myRealloc(mot, len + 1, info, len);
-                if (!mot) return;
+                if (!mot) return nb_total;
                 mot[len - 1] = c;
                 c = fgetc(Fichier);
              }
@@ -128,8 +130,10 @@ void MotFichierTab(FILE *Fichier, TableauDynamique *tab, InfoMem *info) {
             }
             
             myFree(mot, info, len + 1);
+            nb_total++;
         }
     }
+    return nb_total;
 }
 
 int comparerMots(const void *a, const void *b) {
@@ -158,11 +162,13 @@ void ecrireFichierTab(TableauDynamique *tab, int n, const char *nomFichier) {
     fclose(f);
 }
 
-void ecrirePerformancesTab(InfoMem *info, double temps, const char *fichier){
+void ecrirePerformancesTab(InfoMem *info, double temps, int nb_total, int nb_uniques, const char *fichier){
     FILE *f = fopen(fichier, "a"); 
     if (!f) return;
     
-    fprintf(f, "%zu,%zu,%zu,%f,Algo2\n",  
+    fprintf(f, "%d,%d,%zu,%zu,%zu,%f,Algo2\n",  
+            nb_total,
+            nb_uniques,
             info->cumul_alloc, 
             info->cumul_desalloc, 
             info->max_alloc, 
@@ -186,7 +192,7 @@ void algo2(const char *fichierEntree, int n, InfoMem *info, const char *fichierS
         return;
     }
 
-    MotFichierTab(f, &tab, info);
+    int nb_total = MotFichierTab(f, &tab, info);
     fclose(f);
 
     qsort(tab.elements, tab.taille, sizeof(MotTab), comparerMots);
@@ -199,6 +205,8 @@ void algo2(const char *fichierEntree, int n, InfoMem *info, const char *fichierS
     }
 
     printf("\n=== PERFORMANCES ALGO 2 ===\n");
+    printf("Nombre de mots total : %d\n", nb_total);
+    printf("Nombre de mots uniques : %zu\n", tab.taille);
     printf("Cumul allocation : %zu octets\n", info->cumul_alloc);
     printf("Cumul désallocation : %zu octets\n", info->cumul_desalloc);
     printf("Allocation max : %zu octets\n", info->max_alloc);
@@ -209,7 +217,7 @@ void algo2(const char *fichierEntree, int n, InfoMem *info, const char *fichierS
         ecrireFichierTab(&tab, n, fichierSortie);
     }
 
-    ecrirePerformancesTab(info, temps, "performances_algo2.csv");
+    ecrirePerformancesTab(info, temps, nb_total, (int)tab.taille, "performances_algo2.csv");
 
     
     libererTableau(&tab, info);

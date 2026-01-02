@@ -68,9 +68,10 @@ void Conversion3(char *str){
     }
 }
 
-void MotFichier3(FILE *Fichier, Liste *l, InfoMem *info){ 
+int MotFichier3(FILE *Fichier, Liste *l, InfoMem *info, int *nb_uniques){ 
     char c;
-    int longueur_liste = 0;  
+    int longueur_liste = 0;
+    int nb_total = 0;
 
     while ((c = fgetc(Fichier)) != EOF) {
         char *mot = NULL; 
@@ -80,7 +81,8 @@ void MotFichier3(FILE *Fichier, Liste *l, InfoMem *info){
         while (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
             c = fgetc(Fichier);
             if (c == EOF) {
-                return;
+                *nb_uniques = longueur_liste;
+                return nb_total;
             }
         }
         
@@ -90,7 +92,8 @@ void MotFichier3(FILE *Fichier, Liste *l, InfoMem *info){
             len++;
             mot = myRealloc(mot, len + 1, info, len);  
             if (mot == NULL){
-                return;  
+                *nb_uniques = longueur_liste;
+                return nb_total;  
             }
             mot[len - 1] = c;
             c = fgetc(Fichier); 
@@ -101,7 +104,8 @@ void MotFichier3(FILE *Fichier, Liste *l, InfoMem *info){
             len++;
             mot = myRealloc(mot, len + 1, info, len);
             if (mot == NULL){
-                return;
+                *nb_uniques = longueur_liste;
+                return nb_total;
             }
             mot[len - 1] = '\'';
             c = fgetc(Fichier);
@@ -111,7 +115,8 @@ void MotFichier3(FILE *Fichier, Liste *l, InfoMem *info){
                 len++;
                 mot = myRealloc(mot, len + 1, info, len);
                 if (mot == NULL){
-                    return;
+                    *nb_uniques = longueur_liste;
+                    return nb_total;
                 }
                 mot[len - 1] = c;
                 c = fgetc(Fichier);
@@ -128,9 +133,12 @@ void MotFichier3(FILE *Fichier, Liste *l, InfoMem *info){
                 longueur_liste++; 
             }
             
-            myFree(mot, info, len + 1);  
+            myFree(mot, info, len + 1);
+            nb_total++;
         }
     }
+    *nb_uniques = longueur_liste;
+    return nb_total;
 }
 
 void AfficherResultat3(Liste l, int n){
@@ -223,11 +231,13 @@ void ecrireFichier3(Liste m, int n, const char *nomFichier){
     fclose(f);
 }
 
-void ecrirePerformances3(InfoMem *info, double temps, const char *fichier){
+void ecrirePerformances3(InfoMem *info, double temps, int nb_total, int nb_uniques, const char *fichier){
     FILE *f = fopen(fichier, "a"); 
     if (!f) return;
     
-    fprintf(f, "%zu,%zu,%zu,%f,Algo3\n",  
+    fprintf(f, "%d,%d,%zu,%zu,%zu,%f,Algo3\n",  
+            nb_total,
+            nb_uniques,
             info->cumul_alloc, 
             info->cumul_desalloc, 
             info->max_alloc, 
@@ -250,7 +260,8 @@ void algo3(const char *fichierEntree, int n, InfoMem *info,
     
     // Construire la liste avec dichotomie (ordre alphabétique)
     Liste liste = NULL;
-    MotFichier3(f, &liste, info);
+    int nb_uniques = 0;
+    int nb_total = MotFichier3(f, &liste, info, &nb_uniques);
     fclose(f);
     
     triFusion3(&liste);
@@ -263,6 +274,8 @@ void algo3(const char *fichierEntree, int n, InfoMem *info,
     }
     
     printf("\n=== PERFORMANCES ALGO 3 ===\n");
+    printf("Nombre de mots total : %d\n", nb_total);
+    printf("Nombre de mots uniques : %d\n", nb_uniques);
     printf("Cumul allocation : %zu octets\n", info->cumul_alloc);
     printf("Cumul désallocation : %zu octets\n", info->cumul_desalloc);
     printf("Allocation max : %zu octets\n", info->max_alloc);
@@ -271,5 +284,5 @@ void algo3(const char *fichierEntree, int n, InfoMem *info,
     if (fichierSortie) {
         ecrireFichier3(liste, n, fichierSortie);
     }
-    ecrirePerformances3(info, temps, "performances_algo3.csv");
+    ecrirePerformances3(info, temps, nb_total, nb_uniques, "performances_algo3.csv");
 }
