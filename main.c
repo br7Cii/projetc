@@ -7,7 +7,8 @@
 
 int main(int argc, char *argv[]) {
     if (argc < 5) {
-        printf("Usage: %s <algorithme (1/2/3)> <fichier_entree> <nombre_mots> <afficher (0/1)> [fichier_sortie]\n", argv[0]);
+        printf("Usage: %s <algorithme (1/2/3)> <fichier_entree> <nombre_mots> <afficher (0/1)> [fichier_sortie] [longueur_min]\n", argv[0]);
+        printf("  longueur_min : longueur minimale des mots à prendre en compte (optionnel, défaut: 1)\n");
         return 1;
     }
 
@@ -16,9 +17,18 @@ int main(int argc, char *argv[]) {
     int n = atoi(argv[3]);
     int afficher = atoi(argv[4]);
     const char *fichierSortie = NULL;
+    int longueur_min = 1; // Par défaut, tous les mots sont pris en compte
 
     if (argc >= 6) {
         fichierSortie = argv[5];
+    }
+    
+    if (argc >= 7) {
+        longueur_min = atoi(argv[6]);
+        if (longueur_min < 1) {
+            printf("Erreur: La longueur minimale doit être >= 1\n");
+            return 1;
+        }
     }
 
     // Validation de l'algorithme
@@ -38,13 +48,13 @@ int main(int argc, char *argv[]) {
     
     switch(algorithme) {
         case 1:
-            algo1(fichierEntree, n, &info, fichierSortie, afficher);
+            algo1(fichierEntree, n, &info, fichierSortie, afficher, longueur_min);
             break;
         case 2:
-            algo2(fichierEntree, n, &info, fichierSortie, afficher);
+            algo2(fichierEntree, n, &info, fichierSortie, afficher, longueur_min);
             break;
         case 3:
-            algo3(fichierEntree, n, &info, fichierSortie, afficher);
+            algo3(fichierEntree, n, &info, fichierSortie, afficher, longueur_min);
             break;
     }
 

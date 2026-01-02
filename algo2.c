@@ -83,7 +83,7 @@ int creationTab(TableauDynamique *tab, char *mot, InfoMem *info) {
     return 1;
 }
 
-int MotFichierTab(FILE *Fichier, TableauDynamique *tab, InfoMem *info) {
+int MotFichierTab(FILE *Fichier, TableauDynamique *tab, InfoMem *info, int longueur_min) {
     char c;
     int nb_total = 0;
     
@@ -124,13 +124,16 @@ int MotFichierTab(FILE *Fichier, TableauDynamique *tab, InfoMem *info) {
         if (len > 0) {
             mot[len] = '\0';
             
-            Conversion2(mot);
-            if (!rechercheTab(tab, mot)) {
-                creationTab(tab, mot, info);
+            // Filtrer les mots trop courts
+            if (len >= longueur_min) {
+                Conversion2(mot);
+                if (!rechercheTab(tab, mot)) {
+                    creationTab(tab, mot, info);
+                }
+                nb_total++;
             }
             
             myFree(mot, info, len + 1);
-            nb_total++;
         }
     }
     return nb_total;
@@ -177,7 +180,7 @@ void ecrirePerformancesTab(InfoMem *info, double temps, int nb_total, int nb_uni
     fclose(f);
 }
 
-void algo2(const char *fichierEntree, int n, InfoMem *info, const char *fichierSortie, int afficher) {
+void algo2(const char *fichierEntree, int n, InfoMem *info, const char *fichierSortie, int afficher, int longueur_min) {
     clock_t debut = clock();
     
     FILE *f = fopen(fichierEntree, "r");
@@ -192,7 +195,7 @@ void algo2(const char *fichierEntree, int n, InfoMem *info, const char *fichierS
         return;
     }
 
-    int nb_total = MotFichierTab(f, &tab, info);
+    int nb_total = MotFichierTab(f, &tab, info, longueur_min);
     fclose(f);
 
     qsort(tab.elements, tab.taille, sizeof(MotTab), comparerMots);

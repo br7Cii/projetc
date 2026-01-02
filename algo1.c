@@ -41,7 +41,7 @@ void Conversion(char *str){
     }
 }
 
-int MotFichier(FILE *Fichier, Liste *l, InfoMem *info, int *nb_uniques){ 
+int MotFichier(FILE *Fichier, Liste *l, InfoMem *info, int *nb_uniques, int longueur_min){ 
     char c;
     int nb_total = 0;
     *nb_uniques = 0;
@@ -87,14 +87,17 @@ int MotFichier(FILE *Fichier, Liste *l, InfoMem *info, int *nb_uniques){
         
         if (len > 0){
             mot[len] = '\0';
-            Conversion(mot); 
-            if (!recherche(l, mot)){  
-                if(creation(l, mot, info)){
-                    (*nb_uniques)++;
+            // Filtrer les mots trop courts
+            if (len >= longueur_min) {
+                Conversion(mot); 
+                if (!recherche(l, mot)){  
+                    if(creation(l, mot, info)){
+                        (*nb_uniques)++;
+                    }
                 }
+                nb_total++;
             }
             myFree(mot, info, len + 1);
-            nb_total++;
         }
     }
     return nb_total;
@@ -207,7 +210,7 @@ void ecrirePerformances(InfoMem *info, double temps, int nb_total, int nb_unique
 }
 
 void algo1(const char *fichierEntree, int n, InfoMem *info, 
-           const char *fichierSortie, int afficher){
+           const char *fichierSortie, int afficher, int longueur_min){
     
     clock_t debut = clock();
     FILE *f = fopen(fichierEntree, "r");
@@ -217,7 +220,7 @@ void algo1(const char *fichierEntree, int n, InfoMem *info,
     }
     Liste liste = NULL;
     int nb_uniques = 0;
-    int nb_total = MotFichier(f, &liste, info, &nb_uniques);
+    int nb_total = MotFichier(f, &liste, info, &nb_uniques, longueur_min);
     fclose(f);
     triFusion(&liste);
     clock_t fin = clock();

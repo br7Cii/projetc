@@ -68,7 +68,7 @@ void Conversion3(char *str){
     }
 }
 
-int MotFichier3(FILE *Fichier, Liste *l, InfoMem *info, int *nb_uniques){ 
+int MotFichier3(FILE *Fichier, Liste *l, InfoMem *info, int *nb_uniques, int longueur_min){ 
     char c;
     int longueur_liste = 0;
     int nb_total = 0;
@@ -125,16 +125,20 @@ int MotFichier3(FILE *Fichier, Liste *l, InfoMem *info, int *nb_uniques){
         
         if (len > 0){
             mot[len] = '\0';
-            Conversion3(mot);
             
-            Liste *adresse = dichotomie(l, mot, longueur_liste);
-            if (adresse != NULL) {
-                creation3(adresse, mot, info);
-                longueur_liste++; 
+            // Filtrer les mots trop courts
+            if (len >= longueur_min) {
+                Conversion3(mot);
+                
+                Liste *adresse = dichotomie(l, mot, longueur_liste);
+                if (adresse != NULL) {
+                    creation3(adresse, mot, info);
+                    longueur_liste++; 
+                }
+                nb_total++;
             }
             
             myFree(mot, info, len + 1);
-            nb_total++;
         }
     }
     *nb_uniques = longueur_liste;
@@ -247,7 +251,7 @@ void ecrirePerformances3(InfoMem *info, double temps, int nb_total, int nb_uniqu
 }
 
 void algo3(const char *fichierEntree, int n, InfoMem *info, 
-           const char *fichierSortie, int afficher){
+           const char *fichierSortie, int afficher, int longueur_min){
     
     clock_t debut = clock();
     
@@ -261,7 +265,7 @@ void algo3(const char *fichierEntree, int n, InfoMem *info,
     // Construire la liste avec dichotomie (ordre alphabétique)
     Liste liste = NULL;
     int nb_uniques = 0;
-    int nb_total = MotFichier3(f, &liste, info, &nb_uniques);
+    int nb_total = MotFichier3(f, &liste, info, &nb_uniques, longueur_min);
     fclose(f);
     
     triFusion3(&liste);
