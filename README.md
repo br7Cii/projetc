@@ -41,7 +41,7 @@ Fichiers inclus :
    - Inclut un tri des mots par fréquence de manière décroissante.
    - Fournit des fonctions pour afficher les résultats, écrire dans un fichier de sortie, et enregistrer les performances.
 
-8. **algo1.h**
+8. **algo3.h**
    - Contient toutes les déclarations des fonctions utilisées pour l'algorithme 3.  
 
 9. **algo3.c** 
