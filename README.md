@@ -120,7 +120,6 @@ Remarques :
 -------------------------------------------------
 - Assurez vous de mettre tous les arguments obligatoires lors de la compilation.
 - N'oubliez pas de mettre le fichier où les occurences sont comptées quand vous utilisez le programme graphique_mots.py.
-- 
 -------------------------------------------------
 
 Difficultés rencontrées :
