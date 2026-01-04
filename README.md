@@ -92,7 +92,7 @@ Instructions d'installation :
 1. Téléchargez le fichier du projet. 
 2. Assurez-vous d'avoir Visual Studio dans votre machine. 
 3. Sur le terminal, ecrivez **make programme**
-4. Sur le terminal, ecrivez **./programme <algo> <fichier_texte> <nombre_mots> <afficher> <Fichier_sortie> [longueur_min]**
+4. Sur le terminal, ecrivez **./programme <algo> <fichier_texte> <nombre_mots> <Afficher> <Fichier_sortie> [longueur_min]**
    - <algo> : 1, 2 ou 3 pour choisir l’algorithme correspondant (algo1, algo2, algo3).
    - <fichier_texte> : chemin vers le fichier texte à analyser.
    - <nombre_mots> : nombre de mots les plus fréquents à afficher ou sauvegarder.
@@ -107,7 +107,7 @@ Instructions d'utilisation :
    make programme
 
 2. Lancer un algorithme spécifique sur un fichier texte :
-   ./programme <algo> <fichier_texte> <nombre_mots> <afficher> <Fichier_sortie> [longueur_min]
+   ./programme <algo> <fichier_texte> <nombre_mots> <Afficher> <Fichier_sortie> [longueur_min]
 
 3. Lancer le programme benchmark.py pour stocker les performances de toutes les algorithmes sous forme de fichier csv.
 
