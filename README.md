@@ -92,11 +92,12 @@ Instructions d'installation :
 1. Téléchargez le fichier du projet. 
 2. Assurez-vous d'avoir Visual Studio dans votre machine. 
 3. Sur le terminal, ecrivez **make programme**
-4. Sur le terminal, ecrivez **./programme <algo> <fichier_texte> <nombre_mots> <Afficher> <Fichier_sortie> [longueur_min]**
+4. Sur le terminal, ecrivez **./programme <algo> <fichier_texte> <nombre_mots> <Afficher_terminal> <Fichier_sortie> [longueur_min]**
    - <algo> : 1, 2 ou 3 pour choisir l’algorithme correspondant (algo1, algo2, algo3).
    - <fichier_texte> : chemin vers le fichier texte à analyser.
    - <nombre_mots> : nombre de mots les plus fréquents à afficher ou sauvegarder.
-   - <afficher> : 0 pour ne pas afficher les résultats à l’écran, 1 pour afficher.
+   - <Afficher_terminal> : 0 pour ne pas afficher les résultats à l’écran, 1 pour afficher.
+   - <Fichier_sortie> : Mets les résultat dans un fichier.
    - [longueur_min] (optionnel) : longueur minimale des mots à prendre en compte.
 
 -------------------------------------------------
