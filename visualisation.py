@@ -50,7 +50,7 @@ def visualiser_performances(fichier_csv):
                      label=algo, linewidth=2, markersize=6)
 
         ax1.set_title('Temps d\'exécution par algorithme')
-        ax1.set_xlabel('Nombre de mots (N))
+        ax1.set_xlabel('Nombre de mots (N)')
         ax1.set_ylabel('Temps (secondes)')
         ax1.legend()
         ax1.grid(True, linestyle='--', alpha=0.7)
