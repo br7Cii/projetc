@@ -1,3 +1,5 @@
+#ifndef ALGO3_H
+#define ALGO3_H
 #include <stdio.h>
 #include "fonction_allocation.h"
 #include "fonction_commun.h"
@@ -13,3 +15,6 @@ void triFusion3(Liste *l);
 void ecrireFichier3(Liste m, int n, const char *nomFichier);
 void ecrirePerformances3(InfoMem *info, double temps, int nb_total, int nb_uniques, const char *fichier);
 void algo3(const char *fichierEntree, int n, InfoMem *info, const char *fichierSortie, int afficher, int longueur_min);
+
+
+#endif
