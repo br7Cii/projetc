@@ -97,7 +97,7 @@ Instructions d'installation :
    - <fichier_texte> : chemin vers le fichier texte à analyser.
    - <nombre_mots> : nombre de mots les plus fréquents à afficher ou sauvegarder.
    - <Afficher_terminal> : 0 pour ne pas afficher les résultats à l’écran, 1 pour afficher.
-   - <Fichier_sortie> : Mets les résultat dans un fichier.
+   - <Fichier_sortie> : Mets les résultat dans un fichier. /!\ Mettre des guillemets vides ('') si pas fichier de sortie non spécifié.
    - [longueur_min] (optionnel) : longueur minimale des mots à prendre en compte.
 
 -------------------------------------------------
@@ -112,7 +112,7 @@ Instructions d'utilisation :
 
 3. Lancer le programme benchmark.py pour stocker les performances de toutes les algorithmes sous forme de fichier csv.
 
-4. Lancer le programme visualiation.py pour afficher les performances sous forme de graphique.
+4. Lancer le programme visualisation.py pour afficher les performances sous forme de graphique.
 
 5. Lancer le programme graphique_mots.py pour voir les occurences des mots sous forme graphique :
 

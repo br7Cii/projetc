@@ -45,32 +45,25 @@ def generer_graphique_mots(fichier_entree, titre="Mots les plus fréquents", fic
     # Création du graphique
     plt.style.use('ggplot')
     fig, ax = plt.subplots(figsize=(12, 8))
-    
-    # Créer le graphique en barres verticales
     x_pos = range(len(mots))
     bars = ax.bar(x_pos, frequences, color='steelblue', edgecolor='navy', linewidth=0.5)
-    
-    # Personnalisation
+
     ax.set_xticks(x_pos)
     ax.set_xticklabels(mots, rotation=45, ha='right')
     ax.set_xlabel('Mots', fontsize=12, fontweight='bold')
     ax.set_ylabel('Fréquence', fontsize=12, fontweight='bold')
     ax.set_title(titre, fontsize=16, fontweight='bold', pad=20)
     
-    # Ajouter les valeurs sur les barres
     for i, (bar, freq) in enumerate(zip(bars, frequences)):
         height = bar.get_height()
         ax.text(bar.get_x() + bar.get_width()/2, height, 
                f' {freq}', 
                ha='center', va='bottom', fontsize=10, fontweight='bold')
     
-    # Grille pour faciliter la lecture
     ax.grid(True, axis='y', linestyle='--', alpha=0.3)
     
-    # Ajuster les marges
     plt.tight_layout()
     
-    # Sauvegarder
     plt.savefig(fichier_sortie, dpi=150, bbox_inches='tight')
     print(f"Graphique généré avec succès : {fichier_sortie}")
     plt.close()

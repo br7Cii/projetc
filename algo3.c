@@ -77,7 +77,7 @@ int MotFichier3(FILE *Fichier, Liste *l, InfoMem *info, int *nb_uniques, int lon
         char *mot = NULL; 
         int len = 0;
         
-        // Ignorer les espaces
+        // Ignore les espaces
         while (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
             c = fgetc(Fichier);
             if (c == EOF) {
@@ -86,7 +86,7 @@ int MotFichier3(FILE *Fichier, Liste *l, InfoMem *info, int *nb_uniques, int lon
             }
         }
         
-        // Lire le mot
+        // Lit le mot
         while(c != ' ' && c != '\n' && c != '\t' && c != '\r' && c != EOF && 
               c != '\'' && (isalpha((unsigned char)c) || c == '-' || (unsigned char)c >= 128)){
             len++;
@@ -99,7 +99,7 @@ int MotFichier3(FILE *Fichier, Liste *l, InfoMem *info, int *nb_uniques, int lon
             c = fgetc(Fichier); 
         }
         
-        // Gérer l'apostrophe
+        // Gère l'apostrophe
         if (c == '\'' && len > 0){
             len++;
             mot = myRealloc(mot, len + 1, info, len);
@@ -126,7 +126,7 @@ int MotFichier3(FILE *Fichier, Liste *l, InfoMem *info, int *nb_uniques, int lon
         if (len > 0){
             mot[len] = '\0';
             
-            // Filtrer les mots trop courts
+            // Filtre les mots trop courts
             if (len >= longueur_min) {
                 Conversion3(mot);
                 
@@ -255,14 +255,14 @@ void algo3(const char *fichierEntree, int n, InfoMem *info,
     
     clock_t debut = clock();
     
-    // Ouvrir fichier
+    // Ouvre le fichier
     FILE *f = fopen(fichierEntree, "r");
     if (!f) {
         printf("Erreur ouverture fichier\n");
         return;
     }
     
-    // Construire la liste avec dichotomie (ordre alphabétique)
+    // Construit la liste avec dichotomie (ordre alphabétique)
     Liste liste = NULL;
     int nb_uniques = 0;
     int nb_total = MotFichier3(f, &liste, info, &nb_uniques, longueur_min);
@@ -277,14 +277,13 @@ void algo3(const char *fichierEntree, int n, InfoMem *info,
         AfficherResultat3(liste, n);
     }
     
-    printf("\n=== PERFORMANCES ALGO 3 ===\n");
-    printf("Nombre de mots total : %d\n", nb_total);
-    printf("Nombre de mots uniques : %d\n", nb_uniques);
+    printf("\nPERFORMANCES ALGO 3\n");
+    printf("Mots total : %d\n", nb_total);
+    printf("Mots uniques : %d\n", nb_uniques);
     printf("Cumul allocation : %zu octets\n", info->cumul_alloc);
     printf("Cumul désallocation : %zu octets\n", info->cumul_desalloc);
     printf("Allocation max : %zu octets\n", info->max_alloc);
     printf("Temps d'exécution : %.6f secondes\n", temps);
-    printf("===========================\n");
     if (fichierSortie) {
         ecrireFichier3(liste, n, fichierSortie);
     }

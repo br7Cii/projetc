@@ -207,14 +207,13 @@ void algo2(const char *fichierEntree, int n, InfoMem *info, const char *fichierS
         AfficherResultatTab(&tab, n);
     }
 
-    printf("\n=== PERFORMANCES ALGO 2 ===\n");
-    printf("Nombre de mots total : %d\n", nb_total);
-    printf("Nombre de mots uniques : %zu\n", tab.taille);
+    printf("\nPERFORMANCES ALGO 2\n");
+    printf("Mots total : %d\n", nb_total);
+    printf("Mots uniques : %zu\n", tab.taille);
     printf("Cumul allocation : %zu octets\n", info->cumul_alloc);
     printf("Cumul désallocation : %zu octets\n", info->cumul_desalloc);
     printf("Allocation max : %zu octets\n", info->max_alloc);
     printf("Temps d'exécution : %.6f secondes\n", temps);
-    printf("===========================\n");
 
     if (fichierSortie) {
         ecrireFichierTab(&tab, n, fichierSortie);

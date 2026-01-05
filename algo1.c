@@ -228,14 +228,13 @@ void algo1(const char *fichierEntree, int n, InfoMem *info,
     if (afficher) {
         AfficherResultat(liste, n);
     }
-    printf("\n=== PERFORMANCES ALGO 1 ===\n");
-    printf("Nombre de mots total : %d\n", nb_total);
-    printf("Nombre de mots uniques : %d\n", nb_uniques);
+    printf("\nPERFORMANCES ALGO 1\n");
+    printf("Mots total : %d\n", nb_total);
+    printf("Mots uniques : %d\n", nb_uniques);
     printf("Cumul allocation : %zu octets\n", info->cumul_alloc);
     printf("Cumul désallocation : %zu octets\n", info->cumul_desalloc);
     printf("Allocation max : %zu octets\n", info->max_alloc);
     printf("Temps d'exécution : %.6f secondes\n", temps);
-    printf("===========================\n");
     
     if (fichierSortie) {
         ecrireFichier(liste, n, fichierSortie);
