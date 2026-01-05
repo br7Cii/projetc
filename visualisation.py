@@ -17,11 +17,9 @@ def visualiser_performances(fichier_csv):
             for ligne in lecteur:
                 if not ligne: continue
                 
-                # Nouveau format avec nb_mots : nb_total, nb_uniques, cumul_alloc, cumul_desalloc, max_alloc, temps, NomAlgo
                 if len(ligne) >= 7:
                     nb_total = int(ligne[0])
-                    # nb_uniques = int(ligne[1])  # On pourrait l'utiliser aussi
-                    max_alloc = int(ligne[4]) / 1024 # Ko
+                    max_alloc = int(ligne[4]) / 1024
                     temps = float(ligne[5])
                     nom_algo = ligne[6]
                     
@@ -51,8 +49,8 @@ def visualiser_performances(fichier_csv):
                      color=colors[i % len(colors)], 
                      label=algo, linewidth=2, markersize=6)
 
-        ax1.set_title('Complexité Temporelle')
-        ax1.set_xlabel('Nombre de mots (N)')
+        ax1.set_title('Temps d\'exécution par algorithme')
+        ax1.set_xlabel('Nombre de mots (N))
         ax1.set_ylabel('Temps (secondes)')
         ax1.legend()
         ax1.grid(True, linestyle='--', alpha=0.7)
