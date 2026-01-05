@@ -9,8 +9,6 @@ typedef struct {
                            // désalloué
     size_t max_alloc;      // pic d'allocation (diff max des deux cumuls)
 
-    // d'autres champs qui sembleraient utiles
-    // ...
 } InfoMem;
 
 void Init(InfoMem * infoMem); 
